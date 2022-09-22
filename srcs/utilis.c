@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/22 08:40:09 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/22 09:25:34 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,17 @@ void	ft_putstr_fd(char *s, int fd)
 	i = -1;
 	while (s[++i])
 		write(fd, &s[i], 1);
+}
+
+void print(t_data * data, char *msg, int i)
+{
+    long long time;
+    
+    time = 
+    pthread_mutex_lock(&(data->print));
+    printf("%lld ", time);
+    printf("%d ", i + 1);
+    printf("%s\n", msg);
+    pthread_mutex_unlock(&(data->print));
+    
 }
