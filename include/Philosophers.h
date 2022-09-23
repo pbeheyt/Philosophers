@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/23 02:52:44 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/23 09:00:09 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	s_philosopher
 	int			lfork_i;
 	int			rfork_i;
 	long long	time_last_meal;
-	pthread_t	thread_id;
+	pthread_t	thread;
 }				t_philosopher;
 
 typedef struct	s_data
@@ -57,6 +57,11 @@ long long	get_current_time(void);
 void 		print(t_data * data, char *msg, int i);
 
 /*init.c*/
-void	init(t_data *data, int ac, char **av);
+int		init(t_data *data, int ac, char **av);
+
+/*solve.c*/
+void	solve(t_data *data);
+
+
 
 #endif
