@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/22 09:25:34 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/23 02:53:08 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,21 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 }
 
+long long	get_current_time(void)
+{
+	struct timeval	current;
+	long long		result;
+	
+	gettimeofday(&current, NULL);
+	result = current.tv_sec * 1000 + current.tv_usec / 1000;
+	return (result);
+}
+
 void print(t_data * data, char *msg, int i)
 {
     long long time;
     
-    time = 
+    time = get_current_time() - data->launch_time;
     pthread_mutex_lock(&(data->print));
     printf("%lld ", time);
     printf("%d ", i + 1);

@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/22 08:45:17 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/23 02:52:44 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ typedef struct	s_data
 void	error_handler(int error);
 
 /*utlis.c*/
-int		ft_atoi(const char *str, int *error);
-void	ft_putstr_fd(char *s, int fd);
+int			ft_atoi(const char *str, int *error);
+void		ft_putstr_fd(char *s, int fd);
+long long	get_current_time(void);
+void 		print(t_data * data, char *msg, int i);
 
 /*init.c*/
 void	init(t_data *data, int ac, char **av);
