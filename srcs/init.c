@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/23 09:42:11 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/24 05:04:16 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int set_param(t_data *data, char **av)
 	else
 		data->nb_meals = -1;
 	if (data->error)
-		return (error_handler(11), 11);
+		return (print_error(11));
 	return (0);
 }
 
@@ -34,7 +34,7 @@ int	init_philosophers(t_data *data)
 	
 	philosophers = malloc(sizeof(t_philosopher) * data->nb_philosophers);
 	if (!philosophers)
-		return(error_handler(9), 9);
+		return(print_error(9));
 	i = -1;
 	while (++i < data->nb_philosophers)
 	{
@@ -50,16 +50,21 @@ int	init_philosophers(t_data *data)
 
 static int	init_mutex(t_data *data)
 {
-	int i;
-
+	int 			i;
+	pthread_mutex_t	*forks;
+	
+	forks = malloc(sizeof(pthread_mutex_t) * data->nb_philosophers);
+	if (!forks)
+		return (print_error(9));
 	i = -1;
 	while (++i < data->nb_philosophers)
 	{
-		if (pthread_mutex_init(&(data->forks[i]), NULL))
-			return(error_handler(3), 3);
+		if (pthread_mutex_init(&(forks[i]), NULL))
+			return(print_error(3));
 	}
+	data->forks = forks;
 	if (pthread_mutex_init(&(data->print), NULL))
-			return(error_handler(3), 3);
+			return(print_error(3));
 	return (0);
 }
 
@@ -67,7 +72,7 @@ int	init(t_data *data, int ac, char **av)
 {
 	data->error = 0;
 	if (ac != 5 && ac != 6)
-		return(error_handler(2), 2);
+		return(print_error(2));
 	data->has_died = 0;
 	data->all_ate = 0;	
 	if (set_param(data, av) || init_philosophers(data) || init_mutex(data))

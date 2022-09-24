@@ -6,14 +6,14 @@
 #    By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 15:08:45 by pbeheyt           #+#    #+#              #
-#    Updated: 2022/09/23 08:56:40 by pbeheyt          ###   ########.fr        #
+#    Updated: 2022/09/24 04:06:47 by pbeheyt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
 
 SRC		= main.c \
-		error_handler.c \
+		error.c \
 		init.c \
 		solve.c \
 		time.c \

@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/23 08:41:32 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/24 04:07:02 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int ac, char **av)
 
 	init(&data, ac, av);
 	if (data.error)
-		return (error_handler(data.error), data.error);
+		return (print_error(data.error));
 	// solve(&data);
+	printf("yolo");
+	return (0);
 }

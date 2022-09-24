@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/23 09:00:09 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/24 05:05:57 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_data
 }				t_data;
 
 /*error_handler.c*/
-void	error_handler(int error);
+int		print_error(int error);
 
 /*utlis.c*/
 int			ft_atoi(const char *str, int *error);
@@ -61,7 +61,6 @@ int		init(t_data *data, int ac, char **av);
 
 /*solve.c*/
 void	solve(t_data *data);
-
 
 
 #endif
