@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/24 05:04:16 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/24 05:39:20 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	init_philosophers(t_data *data)
 		philosophers[i].lfork_i = i;
 		philosophers[i].rfork_i = (i + 1) % data->nb_philosophers;
 		philosophers[i].time_last_meal = 0;
+		philosophers[i].data = data;
 	}
 	data->philosophers = philosophers;
 	return (0);

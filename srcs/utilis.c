@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/23 08:55:57 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/24 08:16:26 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ long long	get_current_time(void)
 	return (result);
 }
 
-void print(t_data * data, char *msg, int i)
+void print(t_data * data, int i, char *msg)
 {
     long long time;
     
