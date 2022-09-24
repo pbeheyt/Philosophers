@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/24 05:39:20 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/24 09:57:47 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ static int	init_mutex(t_data *data)
 		if (pthread_mutex_init(&(forks[i]), NULL))
 			return(print_error(3));
 	}
-	data->forks = forks;
-	if (pthread_mutex_init(&(data->print), NULL))
+	data->m_forks = forks;
+	if (pthread_mutex_init(&(data->m_print), NULL))
+			return(print_error(3));
+	if (pthread_mutex_init(&(data->m_is_dead), NULL))
 			return(print_error(3));
 	return (0);
 }
