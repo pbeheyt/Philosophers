@@ -6,78 +6,47 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/24 10:16:19 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/25 06:58:07 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-
-static int	philo_take_fork(t_philosopher *philosopher)
+static void	check_meals_eaten(t_philosopher *phi)
 {
-	pthread_mutex_lock(&philosopher->data->m_forks[philosopher->lfork_i]);
-	print(philosopher->data, philosopher->i, "has taken a fork");
-	pthread_mutex_lock(&philosopher->data->m_forks[philosopher->rfork_i]);
-	print(philosopher->data, philosopher->i, "has taken a fork");
+	int	total_meals;
 
-	return (0);
+	total_meals = phi->data->nb_meals;
+	if (phi->nb_meals == total_meals)
+		phi->done_eating = 1;
 }
 
-static int	philo_eat(t_philosopher *philosopher)
+static int	check_end_condition(t_data *data)
 {
-	print(philosopher->data, philosopher->i, "is eating");
-	philosopher->nb_meals += 1;
-	pthread_mutex_unlock(&philosopher->data->m_forks[philosopher->lfork_i]);
-	pthread_mutex_unlock(&philosopher->data->m_forks[philosopher->rfork_i]);
-	return (0);
-}
-
-static int	philo_sleep_and_think(t_philosopher *philosopher)
-{
-	print(philosopher->data, philosopher->i, "is sleeping");
-	usleep(philosopher->data->time_to_sleep * 1000);
-	print(philosopher->data, philosopher->i, "is thinking");
-	return (0);
-}
-	
-
-void	*routine(void *void_arg)
-{
-	t_philosopher philosopher;
-
-	philosopher = *(t_philosopher *)void_arg;
-	if (philosopher.i % 2 == 0)
-		usleep(15000);
-	philosopher.time_last_meal = get_current_time();
-	while (philosopher.data->has_died != 1 && philosopher.data->all_ate != 1)
-	{
-		philo_take_fork(&philosopher);
-		philo_eat(&philosopher);
-		philo_sleep_and_think(&philosopher);
-	}
-	return(NULL);
-}
-
-// static int	all_eaten(t_data *data)
-// {
-	
-// }
-
-static int	is_dead(t_data *data)
-{
+	int	nb_phi_done_eating;
 	int	i;
-
-	i = -1;
-	while (++i < data->nb_philosophers && !(data->has_died))
+	
+	nb_phi_done_eating = 0;
+	i = 0;
+	while (!(data->has_died))
 	{
-		pthread_mutex_lock(&data->m_is_dead);
-		if (get_current_time() - data->philosophers[i].time_last_meal > data->time_to_die)
+		// printf("%d : %lld\n",data->phi[i].i, data->phi[i].time_last_meal);
+		pthread_mutex_lock(&data->m_eat);
+		if ((get_current_time() - data->phi[i].time_last_meal) > data->time_to_die)
 		{
-			print(data, data->philosophers[i].i, " has died");
+			printf("launch time : %lld\n", data->launch_time);
+			printf("%lld - %lld = %lld\n", get_current_time(), data->phi[3].time_last_meal, get_current_time() - data->phi[3].time_last_meal);
+			print(data, data->phi[i].i, "has died");
 			data->has_died = 1;
+			return (1);
 		}
-		pthread_mutex_unlock(&data->m_is_dead);
-		usleep(100);
+		pthread_mutex_unlock(&data->m_eat);
+		check_meals_eaten(&data->phi[i]);
+		if (nb_phi_done_eating == data->nb_phi)
+			return (1);
+	i++;
+	if (i >= data->nb_phi)
+		i = 0;
 	}
 	return (0);
 }
@@ -88,12 +57,15 @@ void	solve(t_data *data)
 
 	data->launch_time = get_current_time();
 	i = -1;
-	while (++i < data->nb_philosophers)
-		pthread_create(&(data->philosophers[i].thread), NULL, routine, (&(data->philosophers[i])));
+	while (++i < data->nb_phi)
+	{
+		pthread_create(&(data->phi[i].thread), NULL, routine, (&(data->phi[i])));
+		data->phi[i].time_last_meal = get_current_time();
+	}
 	while (1)
 	{
 		usleep(50);
-		is_dead(data);
+		if (check_end_condition(data))
+			return ;
 	}
-
 }

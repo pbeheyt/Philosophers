@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/24 10:04:44 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/25 06:51:19 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ struct s_philosopher;
 typedef struct	s_data
 {
 	int						error;
-	int						nb_philosophers;
+	int						nb_phi;
 	int						time_to_die;
 	int						time_to_eat;
 	int						time_to_sleep;
@@ -33,10 +33,10 @@ typedef struct	s_data
 	int						has_died;
 	int						all_ate;
 	long long				launch_time;
-	pthread_mutex_t			m_is_dead;
+	pthread_mutex_t			m_eat;
 	pthread_mutex_t			*m_forks;
 	pthread_mutex_t			m_print;
-	struct s_philosopher	*philosophers;
+	struct s_philosopher	*phi;
 }				t_data;
 
 typedef struct	s_philosopher
@@ -46,6 +46,7 @@ typedef struct	s_philosopher
 	int			lfork_i;
 	int			rfork_i;
 	long long	time_last_meal;
+	int			done_eating;
 	pthread_t	thread;
 	t_data		*data;
 }				t_philosopher;
@@ -61,10 +62,13 @@ void 		print(t_data *data, int i, char *msg);
 /*init.c*/
 int		init(t_data *data, int ac, char **av);
 
+/*routine.c*/
+void	*routine(void *void_arg);
+
 /*solve.c*/
 void	solve(t_data *data);
 
-/*solve.c*/
+/*time.c*/
 long long	get_current_time(void);
 
 #endif
