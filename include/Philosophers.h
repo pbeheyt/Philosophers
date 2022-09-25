@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/25 06:51:19 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/25 09:36:50 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,13 @@ void 		print(t_data *data, int i, char *msg);
 int		init(t_data *data, int ac, char **av);
 
 /*routine.c*/
-void	*routine(void *void_arg);
+void		*routine(void *void_arg);
 
 /*solve.c*/
 void	solve(t_data *data);
 
 /*time.c*/
 long long	get_current_time(void);
+
 
 #endif

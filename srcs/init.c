@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/25 06:34:06 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/25 07:36:24 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,44 +30,38 @@ int set_param(t_data *data, char **av)
 int	init_philosophers(t_data *data)
 {
 	int				i;
-	t_philosopher 	*phi;
 	
-	phi = malloc(sizeof(t_philosopher) * data->nb_phi);
-	if (!phi)
+	data->phi = malloc(sizeof(t_philosopher) * data->nb_phi);
+	if (!data->phi)
 		return(print_error(9));
 	i = -1;
 	while (++i < data->nb_phi)
 	{
-		phi[i].i = i;
-		phi[i].nb_meals = 0;
-		phi[i].lfork_i = i;
-		phi[i].rfork_i = (i + 1) % data->nb_phi;
-		phi[i].time_last_meal = 0;
-		phi[i].done_eating = 0;
-		phi[i].data = data;
+		data->phi[i].i = i;
+		data->phi[i].nb_meals = 0;
+		data->phi[i].lfork_i = i;
+		data->phi[i].rfork_i = (i + 1) % data->nb_phi;
+		data->phi[i].time_last_meal = 0;
+		data->phi[i].done_eating = 0;
+		data->phi[i].data = data;
 	}
-	data->phi = phi;
 	return (0);
 }
 
 static int	init_mutex(t_data *data)
 {
 	int 			i;
-	pthread_mutex_t	*forks;
 	
-	forks = malloc(sizeof(pthread_mutex_t) * data->nb_phi);
-	if (!forks)
+	data->m_forks = malloc(sizeof(pthread_mutex_t) * data->nb_phi);
+	if (!data->m_forks)
 		return (print_error(9));
 	i = -1;
 	while (++i < data->nb_phi)
 	{
-		if (pthread_mutex_init(&(forks[i]), NULL))
+		if (pthread_mutex_init(&(data->m_forks[i]), NULL))
 			return(print_error(3));
 	}
-	data->m_forks = forks;
 	if (pthread_mutex_init(&(data->m_print), NULL))
-			return(print_error(3));
-	if (pthread_mutex_init(&(data->m_is_dead), NULL))
 			return(print_error(3));
 	if (pthread_mutex_init(&(data->m_eat), NULL))
 			return(print_error(3));
