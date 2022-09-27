@@ -6,28 +6,32 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/25 10:01:55 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/27 18:56:35 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-static int	check_meals_eaten(t_philosopher *phi)
+static int	check_meals_eaten(t_data *data, t_philosopher *phi)
 {
-	int	total_meals;
+	int				j;
 
-	total_meals = phi->data->nb_meals;
-	if (phi->nb_meals == total_meals)
-		return (1);
+	if (phi->nb_meals == data->nb_meals)
+		phi->done_eating = 1;
+	j = -1;
+	while (data->phi[++j].done_eating == 1)
+	{
+		if (j == data->nb_phi - 1)
+			return (1);
+	}
 	return (0);
 }
 
 static int	check_end_condition(t_data *data)
 {
-	int				nb_phi_done_eating;
-	int				i;
+	int	i;
+	// int	j;
 	
-	nb_phi_done_eating = 0;
 	i = 0;
 	while (!(data->has_died) && !(data->all_ate))
 	{
@@ -39,11 +43,13 @@ static int	check_end_condition(t_data *data)
 			return (1);
 		}
 		pthread_mutex_unlock(&(data->m_eat));
-		if (check_meals_eaten(&data->phi[i]))
-			nb_phi_done_eating += 1;
-		if (nb_phi_done_eating == data->nb_phi)
+		if (check_meals_eaten(data, &data->phi[i]))
 		{
-			printf("nb meals : %d\n", data->phi->nb_meals);
+			// j = -1;
+			// while (++j < data->nb_phi)
+			// {
+			// 	printf("phi %d ate %d time\n", data->phi[j].i ,data->phi[j].nb_meals);	data->all_ate = 1;
+			// }
 			data->all_ate = 1;
 			return (1);
 		}
@@ -72,3 +78,4 @@ void	solve(t_data *data)
 			return ;
 	}
 }
+
