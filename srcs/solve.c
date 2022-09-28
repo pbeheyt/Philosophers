@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/27 18:56:35 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/28 20:38:11 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,17 @@ static int	check_end_condition(t_data *data)
 	// int	j;
 	
 	i = 0;
-	while (!(data->has_died) && !(data->all_ate))
+	while (!data->has_died && !data->all_ate)
 	{
+		usleep(150);
+		if (data->has_died || data->all_ate)
+			return (1);
 		pthread_mutex_lock(&(data->m_eat));
 		if (((get_current_time() - data->phi[i].time_last_meal) > data->time_to_die))
 		{
-			print(data, data->phi[i].i, "has died");
 			data->has_died = 1;
+			print(data, data->phi[i].i, "has died");
+			pthread_mutex_unlock(&(data->m_eat));
 			return (1);
 		}
 		pthread_mutex_unlock(&(data->m_eat));
@@ -60,7 +64,25 @@ static int	check_end_condition(t_data *data)
 	return (0);
 }
 
-void	solve(t_data *data)
+static void clear_all(t_data *data)
+{
+	int i;
+
+	//pthread_mutex_unlock(&(data->m_eat));
+	i = -1;
+	while (++i < data->nb_phi)
+		pthread_join(data->phi[i].thread, NULL);
+	i = -1;
+	while (++i < data->nb_phi)
+		pthread_mutex_destroy(&(data->m_forks[i]));
+	pthread_mutex_destroy(&(data->m_eat));
+	pthread_mutex_destroy(&(data->m_print));
+	pthread_mutex_destroy(&(data->m_check_end));
+	free(data->phi);
+	free(data->m_forks);
+}
+
+int	solve(t_data *data)
 {
 	int				i;
 
@@ -74,8 +96,12 @@ void	solve(t_data *data)
 	while (1)
 	{
 		usleep(50);
+		//pthread_mutex_lock(&(data->m_check_end));
 		if (check_end_condition(data))
-			return ;
+			return (clear_all(data), 0);
+		//pthread_mutex_unlock(&(data->m_check_end));
+		
 	}
+	return (0);
 }
 

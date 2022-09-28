@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/25 09:36:50 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/28 17:02:38 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct	s_data
 	pthread_mutex_t			m_eat;
 	pthread_mutex_t			*m_forks;
 	pthread_mutex_t			m_print;
+	pthread_mutex_t			m_check_end;
 	struct s_philosopher	*phi;
 }				t_data;
 
@@ -66,7 +67,7 @@ int		init(t_data *data, int ac, char **av);
 void		*routine(void *void_arg);
 
 /*solve.c*/
-void	solve(t_data *data);
+int	solve(t_data *data);
 
 /*time.c*/
 long long	get_current_time(void);
