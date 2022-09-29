@@ -6,18 +6,18 @@
 #    By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 15:08:45 by pbeheyt           #+#    #+#              #
-#    Updated: 2022/09/25 04:05:01 by pbeheyt          ###   ########.fr        #
+#    Updated: 2022/09/29 12:01:56 by pbeheyt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
 
 SRC		= main.c \
+		clear.c \
 		error.c \
 		init.c \
 		routine.c \
 		solve.c \
-		time.c \
 		utilis.c \
 
 DIR 	= ${addprefix srcs/,${SRC}}

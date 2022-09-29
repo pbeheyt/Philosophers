@@ -6,13 +6,13 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/29 10:46:21 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/29 12:10:03 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-static void unlock_mutex(t_philosopher *phi, int ret)
+static void	unlock_mutex(t_philosopher *phi, int ret)
 {
 	if (ret >= 3)
 		pthread_mutex_unlock(&(phi->data->m_eat));
@@ -30,11 +30,11 @@ static int	phi_eat(t_philosopher *phi)
 	print(phi->data, phi->i, "has taken a fork");
 	pthread_mutex_lock(&(phi->data->m_forks[phi->rfork_i]));
 	if (phi->data->has_died || phi->data->all_ate)
-		 return (2);
+		return (2);
 	print(phi->data, phi->i, "has taken a fork");
 	pthread_mutex_lock(&(phi->data->m_eat));
 	if (phi->data->has_died || phi->data->all_ate)
-		 return (3);
+		return (3);
 	print(phi->data, phi->i, "is eating");
 	phi->time_last_meal = get_current_time();
 	phi->nb_meals += 1;
@@ -71,6 +71,5 @@ void	*routine(void *void_arg)
 			return (unlock_mutex(phi, ret), NULL);
 		phi_sleep_and_think(phi);
 	}
-	return(NULL);
+	return (NULL);
 }
-

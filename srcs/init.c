@@ -6,13 +6,13 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/29 11:28:06 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/29 12:11:37 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int set_param(t_data *data, char **av)
+int	set_param(t_data *data, char **av)
 {
 	data->nb_phi = ft_atoi(av[1], &data->error);
 	data->time_to_die = ft_atoi(av[2], &data->error);
@@ -30,12 +30,12 @@ int set_param(t_data *data, char **av)
 int	init_philosophers(t_data *data)
 {
 	int				i;
-	
+
 	if (data->error)
 		return (data->error);
 	data->phi = malloc(sizeof(t_philosopher) * data->nb_phi);
 	if (!data->phi)
-		return(error_handler(data, 9));
+		return (error_handler(data, 9));
 	i = -1;
 	while (++i < data->nb_phi)
 	{
@@ -52,8 +52,8 @@ int	init_philosophers(t_data *data)
 
 static int	init_mutex(t_data *data)
 {
-	int 			i;
-	
+	int	i;
+
 	if (data->error)
 		return (data->error);
 	data->m_forks = malloc(sizeof(pthread_mutex_t) * data->nb_phi);
@@ -63,12 +63,12 @@ static int	init_mutex(t_data *data)
 	while (++i < data->nb_phi)
 	{
 		if (pthread_mutex_init(&(data->m_forks[i]), NULL))
-			return(error_handler(data, MUTEX_ERROR));
+			return (error_handler(data, MUTEX_ERROR));
 	}
 	if (pthread_mutex_init(&(data->m_print), NULL))
-			return(error_handler(data, MUTEX_ERROR));
+		return (error_handler(data, MUTEX_ERROR));
 	if (pthread_mutex_init(&(data->m_eat), NULL))
-			return(error_handler(data, MUTEX_ERROR));
+		return (error_handler(data, MUTEX_ERROR));
 	return (0);
 }
 
@@ -76,9 +76,9 @@ int	init(t_data *data, int ac, char **av)
 {
 	data->error = 0;
 	if (ac != 5 && ac != 6)
-		return(error_handler(data, NB_ARGS_ERROR));
+		return (error_handler(data, NB_ARGS_ERROR));
 	data->has_died = 0;
-	data->all_ate = 0;	
+	data->all_ate = 0;
 	if (set_param(data, av) || init_philosophers(data) || init_mutex(data))
 		return (1);
 	return (0);
