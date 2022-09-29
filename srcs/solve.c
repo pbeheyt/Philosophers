@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/28 20:38:11 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/29 11:28:26 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ static int	check_end_condition(t_data *data)
 	i = 0;
 	while (!data->has_died && !data->all_ate)
 	{
-		usleep(150);
+		usleep(WAIT_CHECK_END_LOOP);
 		if (data->has_died || data->all_ate)
 			return (1);
 		pthread_mutex_lock(&(data->m_eat));
 		if (((get_current_time() - data->phi[i].time_last_meal) > data->time_to_die))
 		{
 			data->has_died = 1;
-			print(data, data->phi[i].i, "has died");
 			pthread_mutex_unlock(&(data->m_eat));
+			print(data, data->phi[i].i, "has died");
 			return (1);
 		}
 		pthread_mutex_unlock(&(data->m_eat));
@@ -68,18 +68,26 @@ static void clear_all(t_data *data)
 {
 	int i;
 
-	//pthread_mutex_unlock(&(data->m_eat));
 	i = -1;
 	while (++i < data->nb_phi)
-		pthread_join(data->phi[i].thread, NULL);
+	{
+		if (data->phi[i].thread)
+			pthread_join(data->phi[i].thread, NULL);
+	}
 	i = -1;
 	while (++i < data->nb_phi)
-		pthread_mutex_destroy(&(data->m_forks[i]));
-	pthread_mutex_destroy(&(data->m_eat));
-	pthread_mutex_destroy(&(data->m_print));
-	pthread_mutex_destroy(&(data->m_check_end));
-	free(data->phi);
-	free(data->m_forks);
+	{
+		if (&(data->m_forks[i]))
+			pthread_mutex_destroy(&(data->m_forks[i]));
+	}
+	if (&(data->m_eat))
+		pthread_mutex_destroy(&(data->m_eat));
+	if (&(data->m_print))
+		pthread_mutex_destroy(&(data->m_print));
+	if (data->phi)
+		free(data->phi);
+	if (data->m_forks)
+		free(data->m_forks);
 }
 
 int	solve(t_data *data)
@@ -90,17 +98,14 @@ int	solve(t_data *data)
 	i = -1;
 	while (++i < data->nb_phi)
 	{
-		pthread_create(&(data->phi[i].thread), NULL, routine, &(data->phi[i]));
+		if (pthread_create(&(data->phi[i].thread), NULL, routine, &(data->phi[i])))
+			return (clear_all(data), error_handler(data, THREAD_ERROR));
 		data->phi[i].time_last_meal = get_current_time();
 	}
 	while (1)
 	{
-		usleep(50);
-		//pthread_mutex_lock(&(data->m_check_end));
 		if (check_end_condition(data))
 			return (clear_all(data), 0);
-		//pthread_mutex_unlock(&(data->m_check_end));
-		
 	}
 	return (0);
 }

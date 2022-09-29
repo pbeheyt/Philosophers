@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/28 17:02:38 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/09/29 11:29:50 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
+
+# define PHILO_WAIT_TO_START 25000
+# define WAIT_CHECK_END_LOOP 150
+
+enum e_error
+{
+	GLOBAL_ERROR,
+	NB_ARGS_ERROR,
+	ARGS_ERROR,
+	MUTEX_ERROR,
+	THREAD_ERROR,
+	ALLOC_ERROR,
+};
 
 struct s_philosopher;
 
@@ -53,7 +66,7 @@ typedef struct	s_philosopher
 }				t_philosopher;
 
 /*error_handler.c*/
-int		print_error(int error);
+int		error_handler(t_data *data, int error);
 
 /*utlis.c*/
 int			ft_atoi(const char *str, int *error);
