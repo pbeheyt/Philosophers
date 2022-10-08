@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/29 12:35:29 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/08 03:56:03 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static int	check_end_condition(t_data *data)
 		if (get_current_time() - data->phi[i].time_last_meal
 			> data->time_to_die)
 		{
-			data->has_died = 1;
 			pthread_mutex_unlock(&(data->m_eat));
-			print(data, data->phi[i].i, "has died");
+			print(data, data->phi[i].i, "died");
+			data->has_died = 1;
 			return (1);
 		}
 		if (check_meals_eaten(data, &data->phi[i]))

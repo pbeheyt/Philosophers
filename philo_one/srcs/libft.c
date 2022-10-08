@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilis.c                                           :+:      :+:    :+:   */
+/*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/29 12:09:38 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/08 06:42:14 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_atoi(const char *str, int *error)
 	result *= sign;
 	tmp = (int)result;
 	if (str[i] || result != tmp || (sign > 0 && ft_strlen(str) > 10)
-		|| (sign < 0 && ft_strlen(str) > 11))
+		|| (sign < 0 && ft_strlen(str) > 11) || sign < 0)
 		*error = 11;
 	return (result);
 }
@@ -60,24 +60,4 @@ void	ft_putstr_fd(char *s, int fd)
 	i = -1;
 	while (s[++i])
 		write(fd, &s[i], 1);
-}
-
-long long	get_current_time(void)
-{
-	struct timeval	current;
-
-	gettimeofday(&current, NULL);
-	return (current.tv_sec * 1000 + current.tv_usec / 1000);
-}
-
-void	print(t_data *data, int i, char *msg)
-{
-	long long	time;
-
-	time = get_current_time() - data->launch_time;
-	pthread_mutex_lock(&(data->m_print));
-	printf("%lld ", time);
-	printf("%d ", i + 1);
-	printf("%s\n", msg);
-	pthread_mutex_unlock(&(data->m_print));
 }

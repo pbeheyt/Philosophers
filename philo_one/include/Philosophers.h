@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/29 12:38:01 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/08 02:40:13 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 # include <pthread.h>
 
 # define PHILO_WAIT_TO_START 15000
-# define WAIT_CHECK_END_LOOP 150
+# define WAIT_CHECK_END_LOOP 100
 
 enum e_error
 {
 	GLOBAL_ERROR,
 	NB_ARGS_ERROR,
+	NB_PHILO_ERROR,
 	ARGS_ERROR,
 	MUTEX_ERROR,
 	THREAD_ERROR,
@@ -71,19 +72,23 @@ void		clear_all(t_data *data);
 /*error_handler.c*/
 int			error_handler(t_data *data, int error);
 
-/*utlis.c*/
-int			ft_atoi(const char *str, int *error);
-void		ft_putstr_fd(char *s, int fd);
-long long	get_current_time(void);
-void		print(t_data *data, int i, char *msg);
-
 /*init.c*/
 int			init(t_data *data, int ac, char **av);
+
+/*libft.c*/
+size_t		ft_strlen(const char *str);
+int			ft_atoi(const char *str, int *error);
+void		ft_putstr_fd(char *s, int fd);
 
 /*routine.c*/
 void		*routine(void *void_arg);
 
 /*solve.c*/
 int			solve(t_data *data);
+
+/*utlis.c*/
+long long	get_current_time(void);
+void		custom_usleep(t_data *data, int ms);
+void		print(t_data *data, int i, char *msg);
 
 #endif
