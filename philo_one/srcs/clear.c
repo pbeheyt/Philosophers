@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/07 03:45:44 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/09 03:25:49 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	clear_all(t_data *data)
 	int	i;
 
 	i = -1;
-	while (++i < data->nb_phi)
+	while (++i < data->nb_phi && data->phi)
 	{
 		if (data->phi[i].thread)
 			pthread_join(data->phi[i].thread, NULL);
 	}
 	i = -1;
-	while (++i < data->nb_phi)
+	while (++i < data->nb_phi && data->m_forks)
 	{
 		if (&(data->m_forks[i]))
 			pthread_mutex_destroy(&(data->m_forks[i]));

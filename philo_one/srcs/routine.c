@@ -6,16 +6,21 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/08 06:41:17 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/09 05:25:33 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-static void	phi_eat(t_philosopher *phi)
+static int	phi_start_eating(t_philosopher *phi)
 {
 	pthread_mutex_lock(&(phi->data->m_forks[phi->lfork_i]));
 	print(phi->data, phi->i, "has taken a fork");
+	if (phi->data->nb_phi == 1)
+	{
+		pthread_mutex_unlock(&(phi->data->m_forks[phi->lfork_i]));
+		return (1);
+	}
 	pthread_mutex_lock(&(phi->data->m_forks[phi->rfork_i]));
 	print(phi->data, phi->i, "has taken a fork");
 	pthread_mutex_lock(&(phi->data->m_eat));
@@ -29,6 +34,7 @@ static void	phi_eat(t_philosopher *phi)
 	pthread_mutex_unlock(&(phi->data->m_forks[phi->rfork_i]));
 	custom_usleep(phi->data, phi->data->time_to_sleep);
 	print(phi->data, phi->i, "is thinking");
+	return (0);
 }
 
 void	*routine(void *void_arg)
@@ -39,6 +45,9 @@ void	*routine(void *void_arg)
 	if (!(phi->i % 2))
 		usleep(PHILO_WAIT_TO_START);
 	while (!phi->data->has_died && !phi->data->all_ate)
-		phi_eat(phi);
+	{
+		if (phi_start_eating(phi))
+			return (NULL);
+	}
 	return (NULL);
 }
