@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/09 05:25:33 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/09 08:37:10 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	phi_start_eating(t_philosopher *phi)
 	print(phi->data, phi->i, "has taken a fork");
 	pthread_mutex_lock(&(phi->data->m_eat));
 	print(phi->data, phi->i, "is eating");
-	phi->time_last_meal = get_current_time();
+	phi->time_last_meal = get_curr_time();
 	phi->nb_meals += 1;
 	pthread_mutex_unlock(&(phi->data->m_eat));
 	custom_usleep(phi->data, phi->data->time_to_eat);

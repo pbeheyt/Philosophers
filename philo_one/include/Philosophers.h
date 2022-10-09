@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/08 02:40:13 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/09 08:36:43 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_data
 	pthread_mutex_t			m_eat;
 	pthread_mutex_t			*m_forks;
 	pthread_mutex_t			m_print;
-	pthread_mutex_t			m_check_end;
 	struct s_philosopher	*phi;
+	struct s_check_status	*cs;
 }				t_data;
 
 typedef struct s_philosopher
@@ -66,11 +66,19 @@ typedef struct s_philosopher
 	t_data		*data;
 }				t_philosopher;
 
+typedef struct s_check_status
+{
+	int			m_eat;
+	int			m_print;
+	int			m_forks;
+	int			threads;
+}				t_check_status;
+
 /*clear.c*/
 void		clear_all(t_data *data);
 
 /*error_handler.c*/
-int			error_handler(t_data *data, int error);
+int			error_handler(t_data *data, int error, int clear);
 
 /*init.c*/
 int			init(t_data *data, int ac, char **av);
@@ -87,7 +95,7 @@ void		*routine(void *void_arg);
 int			solve(t_data *data);
 
 /*utlis.c*/
-long long	get_current_time(void);
+long long	get_curr_time(void);
 void		custom_usleep(t_data *data, int ms);
 void		print(t_data *data, int i, char *msg);
 

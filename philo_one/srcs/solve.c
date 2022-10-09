@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/09 05:35:56 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/09 08:36:33 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static int	check_end_condition(t_data *data)
 	{
 		usleep(WAIT_CHECK_END_LOOP);
 		pthread_mutex_lock(&(data->m_eat));
-		if (get_current_time() - data->phi[i].time_last_meal
-			> data->time_to_die)
+		if (get_curr_time() - data->phi[i].time_last_meal > data->time_to_die)
 		{
 			print(data, data->phi[i].i, "died");
 			pthread_mutex_unlock(&(data->m_eat));
@@ -46,6 +45,7 @@ static int	check_end_condition(t_data *data)
 		}
 		if (check_meals_eaten(data, &data->phi[i]))
 		{
+			pthread_mutex_unlock(&(data->m_eat));
 			data->all_ate = 1;
 			return (1);
 		}
@@ -60,14 +60,15 @@ int	solve(t_data *data)
 {
 	int				i;
 
-	data->launch_time = get_current_time();
+	data->launch_time = get_curr_time();
 	i = -1;
 	while (++i < data->nb_phi)
 	{
 		if (pthread_create(&(data->phi[i].thread),
 				NULL, routine, &(data->phi[i])))
-			return (clear_all(data), error_handler(data, THREAD_ERROR));
-		data->phi[i].time_last_meal = get_current_time();
+			return (error_handler(data, THREAD_ERROR, 1));
+		data->phi[i].time_last_meal = get_curr_time();
+		data->cs->threads += 1;
 	}
 	while (1)
 	{
@@ -76,10 +77,3 @@ int	solve(t_data *data)
 	}
 	return (0);
 }
-
-			// j = -1;
-			// while (++j < data->nb_phi)
-			// {
-			// 	printf("phi %d ate %d time\n", data->phi[j].i,
-			// 		data->phi[j].nb_meals);
-			// }
