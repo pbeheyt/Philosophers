@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/11 04:10:50 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/11 05:14:29 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	phi_start_eating(t_philosopher *phi)
 {
 	pthread_mutex_lock(&(phi->data->m_forks[phi->lfork_i]));
-	usleep(50);
 	print(phi->data, phi->i, "has taken a fork");
 	if (phi->data->nb_phi == 1)
 	{
@@ -23,7 +22,6 @@ static int	phi_start_eating(t_philosopher *phi)
 		return (1);
 	}
 	pthread_mutex_lock(&(phi->data->m_forks[phi->rfork_i]));
-	usleep(50);
 	print(phi->data, phi->i, "has taken a fork");
 	pthread_mutex_lock(&(phi->data->m_eat));
 	print(phi->data, phi->i, "is eating");

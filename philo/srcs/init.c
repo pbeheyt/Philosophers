@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/11 03:50:50 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/11 05:29:00 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	set_param(t_data *data, char **av)
 {
 	data->nb_phi = ft_atoi(av[1], &data->error);
-	if (data->nb_phi <= 0)
+	if (!(data->nb_phi > 0 && data->nb_phi <= 200))
 		return (error_handler(data, NB_PHILO_ERROR, 1));
 	data->time_to_die = ft_atoi(av[2], &data->error);
 	data->time_to_eat = ft_atoi(av[3], &data->error);

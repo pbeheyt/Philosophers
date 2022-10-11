@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/11 03:52:16 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/11 04:52:41 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	error_handler(t_data *data, int error, int clear)
 {
 	data->error = error;
 	if (error == NB_ARGS_ERROR)
-		ft_putstr_fd("Error\nInvalid number of arguments", 2);
+		ft_putstr_fd("Error\nInvalid number of arguments\n", 2);
 	if (error == NB_PHILO_ERROR)
-		ft_putstr_fd("Error\nInvalid number of philosophers", 2);
+		ft_putstr_fd("Error\nInvalid number of philosophers\n", 2);
 	if (error == ARGS_ERROR)
-		ft_putstr_fd("Error\nWrong set of arguments", 2);
+		ft_putstr_fd("Error\nWrong set of arguments\n", 2);
 	if (error == MIN_TIME_ERROR)
-		ft_putstr_fd("Error\nTime to sleep/eat must be at least 10ms", 2);
+		ft_putstr_fd("Error\nTime to sleep/eat must be at least 10ms\n", 2);
 	if (error == MUTEX_ERROR)
-		ft_putstr_fd("Error\nFailed to initialize mutex", 2);
+		ft_putstr_fd("Error\nFailed to initialize mutex\n", 2);
 	if (error == THREAD_ERROR)
-		ft_putstr_fd("Error\nFailed to create thread", 2);
+		ft_putstr_fd("Error\nFailed to create thread\n", 2);
 	if (error == ALLOC_ERROR)
-		ft_putstr_fd("Error\nMemory allocation failed", 2);
+		ft_putstr_fd("Error\nMemory allocation failed\n", 2);
 	if (clear)
 		clear_all(data);
 	return (error);

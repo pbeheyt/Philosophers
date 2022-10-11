@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/09 08:37:53 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/11 05:43:30 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	print(t_data *data, int i, char *msg)
 {
 	long long	time;
 
-	time = get_curr_time() - data->launch_time;
 	pthread_mutex_lock(&(data->m_print));
-	if (!data->has_died)
+	time = get_curr_time() - data->launch_time;
+	if (!data->has_died && !data->all_ate)
 	{
 		printf("%lld ", time);
 		printf("%d ", i + 1);
