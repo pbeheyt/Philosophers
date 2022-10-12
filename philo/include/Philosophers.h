@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/11 03:51:06 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/12 05:57:08 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <string.h>
 # include <pthread.h>
 
-# define PHILO_WAIT_TO_START 15000
+# define PHILO_WAIT_TO_START 10000
 # define WAIT_CHECK_END_LOOP 100
+# define WAIT_CUSTOM_SLEEP 100
 
 enum e_error
 {
@@ -98,6 +99,6 @@ int			solve(t_data *data);
 /*utlis.c*/
 long long	get_curr_time(void);
 void		custom_usleep(t_data *data, int ms);
-void		print(t_data *data, int i, char *msg);
+void		print(t_data *data, int i, int died, char *msg);
 
 #endif

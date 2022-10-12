@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/11 05:29:00 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/12 06:17:14 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	set_param(t_data *data, char **av)
 	data->time_to_die = ft_atoi(av[2], &data->error);
 	data->time_to_eat = ft_atoi(av[3], &data->error);
 	data->time_to_sleep = ft_atoi(av[4], &data->error);
-	if (data->time_to_eat < 10 || data->time_to_sleep < 10)
+	if (data->time_to_eat < 30 || data->time_to_sleep < 30)
 		return (error_handler(data, MIN_TIME_ERROR, 1));
 	if (av[5])
 	{
@@ -88,8 +88,6 @@ int	init(t_data *data, int ac, char **av)
 	data->error = 0;
 	if (ac != 5 && ac != 6)
 		return (error_handler(data, NB_ARGS_ERROR, 0));
-	data->has_died = 0;
-	data->all_ate = 0;
 	data->cs = malloc(sizeof(t_check_status));
 	if (!data->cs)
 		return (error_handler(data, ALLOC_ERROR, 0));
@@ -97,9 +95,11 @@ int	init(t_data *data, int ac, char **av)
 	data->cs->m_print = 0;
 	data->cs->m_forks = 0;
 	data->cs->threads = 0;
+	data->has_died = 0;
+	data->all_ate = 0;
 	data->m_forks = 0;
 	data->phi = 0;
 	if (set_param(data, av) || init_philosophers(data) || init_mutex(data))
-		return (1);
+		return (data->error);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/09/29 11:14:05 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/12 05:38:13 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
-	init(&data, ac, av);
-	if (data.error)
+	if (init(&data, ac, av))
 		return (data.error);
 	solve(&data);
 	return (0);

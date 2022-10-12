@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/11 05:43:30 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/12 05:56:43 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,21 @@ void	custom_usleep(t_data *data, int ms)
 	{
 		if (data->has_died)
 			return ;
-		usleep(50);
+		usleep(WAIT_CUSTOM_SLEEP);
 		end = get_curr_time();
 	}
 }
 
-void	print(t_data *data, int i, char *msg)
+void	print(t_data *data, int i, int died, char *msg)
 {
-	long long	time;
-
 	pthread_mutex_lock(&(data->m_print));
-	time = get_curr_time() - data->launch_time;
-	if (!data->has_died && !data->all_ate)
+	if (!data->error && !data->has_died && !data->all_ate)
 	{
-		printf("%lld ", time);
+		printf("%lld ", get_curr_time() - data->launch_time);
 		printf("%d ", i + 1);
 		printf("%s\n", msg);
+		if (died == 1)
+			data->has_died = 1;
 	}
 	pthread_mutex_unlock(&(data->m_print));
 }
