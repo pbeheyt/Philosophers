@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/12 05:57:08 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/12 09:52:07 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define PHILO_WAIT_TO_START 10000
 # define WAIT_CHECK_END_LOOP 100
-# define WAIT_CUSTOM_SLEEP 100
+# define WAIT_CUSTOM_SLEEP 300
 
 enum e_error
 {
