@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/12 06:43:24 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/13 07:46:00 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	phi_start_eating(t_philosopher *phi)
 	pthread_mutex_unlock(&(phi->data->m_eat));
 	custom_usleep(phi->data, phi->data->time_to_eat);
 	print(phi->data, phi->i, 0, "is sleeping");
-	pthread_mutex_unlock(&(phi->data->m_forks[phi->lfork_i]));
 	pthread_mutex_unlock(&(phi->data->m_forks[phi->rfork_i]));
+	pthread_mutex_unlock(&(phi->data->m_forks[phi->lfork_i]));
 	custom_usleep(phi->data, phi->data->time_to_sleep);
 	print(phi->data, phi->i, 0, "is thinking");
 	return (0);

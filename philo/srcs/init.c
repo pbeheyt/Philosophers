@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/12 06:17:14 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/13 07:25:28 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,16 @@ int	init_philosophers(t_data *data)
 	{
 		data->phi[i].i = i;
 		data->phi[i].nb_meals = 0;
-		data->phi[i].lfork_i = i;
-		data->phi[i].rfork_i = (i + 1) % data->nb_phi;
+		if (data->phi[i].i % 2)
+		{
+			data->phi[i].lfork_i = i;
+			data->phi[i].rfork_i = (i + 1) % data->nb_phi;
+		}
+		else
+		{
+			data->phi[i].rfork_i = i;
+			data->phi[i].lfork_i = (i + 1) % data->nb_phi;
+		}
 		data->phi[i].time_last_meal = 0;
 		data->phi[i].done_eating = 0;
 		data->phi[i].data = data;
