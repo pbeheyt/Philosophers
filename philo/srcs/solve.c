@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 07:40:58 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 08:49:18 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	check_end_condition(t_data *data)
 	i = 0;
 	while (1)
 	{
-		usleep(WAIT_CHECK_END_LOOP);
 		pthread_mutex_lock(&(data->m_eat));
 		if (check_death_phi(data, &data->phi[i]))
 			return (pthread_mutex_unlock(&(data->m_eat)), 1);

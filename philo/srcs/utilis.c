@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 07:34:23 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 08:56:34 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,17 @@ static int check_end(t_data *data)
 	return (0);
 }
 
-void	custom_usleep(t_data *data, int ms)
+void	custom_usleep(t_data *data, long long ms)
 {
-	long	start;
-	long	end;
+    long long    i;
 
-	start = get_curr_time();
-	end = get_curr_time();
-	while (end - start < ms)
-	{
-		if (check_end(data))
-			return ;
-		usleep(WAIT_CUSTOM_SLEEP);
-		end = get_curr_time();
-	}
+    i = get_curr_time();
+    while (!check_end(data))
+    {
+        if ((get_curr_time() - i) >= ms)
+            break ;
+        usleep(WAIT_CUSTOM_SLEEP);
+    }
 }
 
 int	print(t_data *data, int i, int died, char *msg)

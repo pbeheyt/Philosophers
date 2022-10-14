@@ -6,7 +6,7 @@
 #    By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 15:08:45 by pbeheyt           #+#    #+#              #
-#    Updated: 2022/10/12 10:58:47 by pbeheyt          ###   ########.fr        #
+#    Updated: 2022/10/14 08:54:58 by pbeheyt          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ HEAD	= -I include
 
 CC 		= gcc
 
-CFLAGS 	= -Wall -Wextra -Werror -g -pthread -fsanitize=thread
+CFLAGS 	= -Wall -Wextra -Werror -g -pthread #-fsanitize=thread
 
 OBJS 	= ${DIR:.c=.o}
 
