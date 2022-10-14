@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 06:21:05 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 09:40:58 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	init_philosophers(t_data *data)
 	data->phi = malloc(sizeof(t_philosopher) * data->nb_phi);
 	if (!data->phi)
 		return (error_handler(data, ALLOC_ERROR, 1));
+	ft_memset(data->phi, 0, sizeof(t_philosopher) * data->nb_phi);
 	i = -1;
 	while (++i < data->nb_phi)
 	{
 		data->phi[i].i = i;
-		data->phi[i].nb_meals = 0;
 		if (data->phi[i].i % 2)
 		{
 			data->phi[i].lfork_i = i;
@@ -59,8 +59,6 @@ int	init_philosophers(t_data *data)
 			data->phi[i].rfork_i = i;
 			data->phi[i].lfork_i = (i + 1) % data->nb_phi;
 		}
-		data->phi[i].time_last_meal = 0;
-		data->phi[i].done_eating = 0;
 		data->phi[i].data = data;
 	}
 	return (0);
@@ -96,20 +94,13 @@ static int	init_mutex(t_data *data)
 
 int	init(t_data *data, int ac, char **av)
 {
-	data->error = 0;
+	ft_memset(data, 0, sizeof(t_data));
 	if (ac != 5 && ac != 6)
 		return (error_handler(data, NB_ARGS_ERROR, 0));
 	data->cs = malloc(sizeof(t_check_status));
 	if (!data->cs)
 		return (error_handler(data, ALLOC_ERROR, 0));
-	data->cs->m_eat = 0;
-	data->cs->m_print = 0;
-	data->cs->m_forks = 0;
-	data->cs->threads = 0;
-	data->has_died = 0;
-	data->all_ate = 0;
-	data->m_forks = 0;
-	data->phi = 0;
+	ft_memset(data->cs, 0, sizeof(t_check_status));
 	if (set_param(data, av) || init_philosophers(data) || init_mutex(data))
 		return (data->error);
 	return (0);

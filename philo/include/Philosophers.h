@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 08:46:55 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 09:23:35 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int			init(t_data *data, int ac, char **av);
 size_t		ft_strlen(const char *str);
 int			ft_atoi(const char *str, int *error);
 void		ft_putstr_fd(char *s, int fd);
+void		*ft_memset(void *s, int c, size_t n);
 
 /*routine.c*/
 void		*routine(void *void_arg);
