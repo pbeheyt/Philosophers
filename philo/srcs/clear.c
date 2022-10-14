@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/12 02:50:18 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 06:56:55 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	destroy_mutex(t_data *data)
 		pthread_mutex_destroy(&(data->m_eat));
 	if (data->cs->m_print)
 		pthread_mutex_destroy(&(data->m_print));
+	if (data->cs->m_end)
+		pthread_mutex_destroy(&(data->m_end));
 }
 
 void	clear_all(t_data *data)

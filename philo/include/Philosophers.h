@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/12 09:52:07 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 07:03:39 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define PHILO_WAIT_TO_START 10000
 # define WAIT_CHECK_END_LOOP 100
-# define WAIT_CUSTOM_SLEEP 300
+# define WAIT_CUSTOM_SLEEP 60000
 
 enum e_error
 {
@@ -52,6 +52,7 @@ typedef struct s_data
 	pthread_mutex_t			m_eat;
 	pthread_mutex_t			*m_forks;
 	pthread_mutex_t			m_print;
+	pthread_mutex_t			m_end;
 	struct s_philosopher	*phi;
 	struct s_check_status	*cs;
 }				t_data;
@@ -73,6 +74,7 @@ typedef struct s_check_status
 	int			m_eat;
 	int			m_print;
 	int			m_forks;
+	int			m_end;
 	int			threads;
 }				t_check_status;
 
@@ -99,6 +101,6 @@ int			solve(t_data *data);
 /*utlis.c*/
 long long	get_curr_time(void);
 void		custom_usleep(t_data *data, int ms);
-void		print(t_data *data, int i, int died, char *msg);
+int			print(t_data *data, int i, int died, char *msg);
 
 #endif

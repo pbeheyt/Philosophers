@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/13 09:09:18 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 07:40:58 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,8 @@
 
 static int	check_death_phi(t_data *data, t_philosopher *phi)
 {
-	pthread_mutex_lock(&(data->m_eat));
 	if (get_curr_time() - phi->time_last_meal > data->time_to_die)
-	{
-		print(data, phi->i, 0, "died");
-		data->has_died = 1;
-		pthread_mutex_unlock(&(data->m_eat));
-		return (1);
-	}
-	pthread_mutex_unlock(&(data->m_eat));
+		return (print(data, phi->i, 1, "died"), 1);
 	return (0);
 }
 
@@ -30,7 +23,6 @@ static int	check_meals_eaten(t_data *data, t_philosopher *phi)
 {
 	int				j;
 
-	pthread_mutex_lock(&(data->m_eat));
 	if (phi->nb_meals == data->nb_meals)
 		phi->done_eating = 1;
 	j = -1;
@@ -38,16 +30,17 @@ static int	check_meals_eaten(t_data *data, t_philosopher *phi)
 	{
 		if (j == data->nb_phi - 1)
 		{
+			pthread_mutex_lock(&(data->m_end));
 			data->all_ate = 1;
-			pthread_mutex_unlock(&(data->m_eat));
+			pthread_mutex_unlock(&(data->m_end));
 			return (1);
 		}
 	}
-	pthread_mutex_unlock(&(data->m_eat));
+
 	return (0);
 }
 
-static void	check_end_condition(t_data *data)
+static int	check_end_condition(t_data *data)
 {
 	int	i;
 
@@ -55,13 +48,16 @@ static void	check_end_condition(t_data *data)
 	while (1)
 	{
 		usleep(WAIT_CHECK_END_LOOP);
+		pthread_mutex_lock(&(data->m_eat));
 		if (check_death_phi(data, &data->phi[i]))
-			return ;
+			return (pthread_mutex_unlock(&(data->m_eat)), 1);
 		if (check_meals_eaten(data, &data->phi[i]))
-			return ;
+			return (pthread_mutex_unlock(&(data->m_eat)), 1);
+		pthread_mutex_unlock(&(data->m_eat));
 		if (++i >= data->nb_phi)
 			i = 0;
 	}
+	return (0);
 }
 
 static int	create_threads(t_data *data)
@@ -88,6 +84,6 @@ int	solve(t_data *data)
 	if (create_threads(data))
 		return (data->error);
 	check_end_condition(data);
-	// clear_all(data);
+	clear_all(data);
 	return (0);
 }

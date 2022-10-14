@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/13 08:50:42 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/14 07:34:23 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ long long	get_curr_time(void)
 	return (current.tv_sec * 1000 + current.tv_usec / 1000);
 }
 
+static int check_end(t_data *data)
+{
+	pthread_mutex_lock(&(data->m_end));
+	if (data->error || data->has_died || data->all_ate)
+		return (pthread_mutex_unlock(&(data->m_end)), 1);
+	pthread_mutex_unlock(&(data->m_end));
+	return (0);
+}
+
 void	custom_usleep(t_data *data, int ms)
 {
 	long	start;
@@ -29,23 +38,27 @@ void	custom_usleep(t_data *data, int ms)
 	end = get_curr_time();
 	while (end - start < ms)
 	{
-		if (data->has_died)
+		if (check_end(data))
 			return ;
 		usleep(WAIT_CUSTOM_SLEEP);
 		end = get_curr_time();
 	}
 }
 
-void	print(t_data *data, int i, int died, char *msg)
+int	print(t_data *data, int i, int died, char *msg)
 {
 	pthread_mutex_lock(&(data->m_print));
-	if (!data->error && !data->has_died && !data->all_ate)
+	if (check_end(data))
+		return (pthread_mutex_unlock(&(data->m_print)), 1);
+	printf("%lld ", get_curr_time() - data->launch_time);
+	printf("%d ", i + 1);
+	printf("%s\n", msg);
+	if (died == 1)
 	{
-		printf("%lld ", get_curr_time() - data->launch_time);
-		printf("%d ", i + 1);
-		printf("%s\n", msg);
-		if (died == 1)
-			data->has_died = 1;
+		pthread_mutex_lock(&(data->m_end));
+		data->has_died = 1;
+		pthread_mutex_unlock(&(data->m_end));
 	}
 	pthread_mutex_unlock(&(data->m_print));
+	return (0);
 }
