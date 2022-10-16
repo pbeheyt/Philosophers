@@ -6,13 +6,13 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/16 05:29:19 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/16 17:08:52 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Philosophers.h"
 
-int	set_param(t_data *data, char **av)
+static int	set_param(t_data *data, char **av)
 {
 	data->nb_phi = ft_atoi(av[1], &data->error);
 	if (data->nb_phi <= 0)
@@ -35,7 +35,7 @@ int	set_param(t_data *data, char **av)
 	return (0);
 }
 
-int	init_philosophers(t_data *data)
+static int	init_philosophers(t_data *data)
 {
 	int				i;
 
