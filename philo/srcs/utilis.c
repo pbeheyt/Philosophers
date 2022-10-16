@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 09:21:30 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/16 04:30:18 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ long long	get_curr_time(void)
 	return (current.tv_sec * 1000 + current.tv_usec / 1000);
 }
 
-static int check_end(t_data *data)
+static int	check_end(t_data *data)
 {
 	pthread_mutex_lock(&(data->m_end));
 	if (data->error || data->has_died || data->all_ate)
@@ -31,15 +31,15 @@ static int check_end(t_data *data)
 
 void	custom_usleep(t_data *data, long long ms)
 {
-    long long    i;
+	long long	start_time;
 
-    i = get_curr_time();
-    while (!check_end(data))
-    {
-        if ((get_curr_time() - i) >= ms)
-            break ;
-        usleep(WAIT_CUSTOM_SLEEP);
-    }
+	start_time = get_curr_time();
+	while (!check_end(data))
+	{
+		if ((get_curr_time() - start_time) >= ms)
+			break ;
+		usleep(WAIT_CUSTOM_SLEEP);
+	}
 }
 
 int	print(t_data *data, int i, int died, char *msg)
@@ -57,4 +57,3 @@ int	print(t_data *data, int i, int died, char *msg)
 	pthread_mutex_unlock(&(data->m_print));
 	return (0);
 }
-

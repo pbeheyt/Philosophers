@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 08:49:18 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/16 04:31:15 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	check_meals_eaten(t_data *data, t_philosopher *phi)
 			return (1);
 		}
 	}
-
 	return (0);
 }
 
