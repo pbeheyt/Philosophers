@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/18 21:46:42 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/19 01:45:44 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	error_handler(t_data *data, int error, int clear)
 {
 	data->error = error;
-	if (data->cs->m_print)
+	if (clear && data->cs->m_print)
 		pthread_mutex_lock(&(data->m_print));
 	if (error == NB_ARGS_ERROR)
 		ft_putstr_fd("Error\nInvalid number of arguments\n", 2);
@@ -31,7 +31,7 @@ int	error_handler(t_data *data, int error, int clear)
 		ft_putstr_fd("Error\nFailed to create thread\n", 2);
 	if (error == ALLOC_ERROR)
 		ft_putstr_fd("Error\nMemory allocation failed\n", 2);
-	if (data->cs->m_print)
+	if (clear && data->cs->m_print)
 		pthread_mutex_unlock(&(data->m_print));
 	if (clear)
 		clear_all(data);
