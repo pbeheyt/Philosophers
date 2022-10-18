@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/16 04:59:37 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/18 21:38:21 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*routine(void *void_arg)
 	t_philosopher	*phi;
 
 	phi = (t_philosopher *)void_arg;
-	if ((phi->i % 2))
+	if (phi->i % 2)
 		usleep(PHILO_WAIT);
 	while (1)
 	{
