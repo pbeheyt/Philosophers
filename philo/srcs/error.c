@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 01:56:10 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/12 06:17:41 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/18 21:46:42 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	error_handler(t_data *data, int error, int clear)
 	if (error == ARGS_ERROR)
 		ft_putstr_fd("Error\nWrong set of arguments\n", 2);
 	if (error == MIN_TIME_ERROR)
-		ft_putstr_fd("Error\nTime to sleep/eat must be at least 30ms\n", 2);
+		ft_putstr_fd("Error\nTime to sleep/eat must be at least 10ms\n", 2);
 	if (error == MUTEX_ERROR)
 		ft_putstr_fd("Error\nFailed to initialize mutex\n", 2);
 	if (error == THREAD_ERROR)

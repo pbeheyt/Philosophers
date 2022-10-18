@@ -6,7 +6,7 @@
 /*   By: pbeheyt <pbeheyt@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 04:41:55 by pbeheyt           #+#    #+#             */
-/*   Updated: 2022/10/14 09:23:35 by pbeheyt          ###   ########.fr       */
+/*   Updated: 2022/10/18 21:50:06 by pbeheyt          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <pthread.h>
 
 # define PHILO_WAIT 1000
-# define WAIT_CUSTOM_SLEEP 10000
+# define WAIT_CUSTOM_SLEEP 1000
 
 enum e_error
 {
